@@ -1,0 +1,14 @@
+package com.mealplanner.recipe_service.repository;
+
+import com.mealplanner.recipe_service.model.RecipeIngredient;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.UUID;
+
+@Repository
+public interface RecipeIngredientRepository extends JpaRepository<RecipeIngredient, UUID> {
+    List<RecipeIngredient> findByRecipeId(UUID recipeId);
+    List<RecipeIngredient> findByIngredientId(UUID ingredientId);
+}
