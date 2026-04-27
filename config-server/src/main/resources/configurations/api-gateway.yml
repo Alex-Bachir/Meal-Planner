@@ -1,0 +1,42 @@
+server:
+  port: 8222
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: api-gateway
+        health-check-path: /actuator/health
+        health-check-interval: 10s
+    gateway:
+      routes:
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/api/auth/**
+        - id: profile-service
+          uri: lb://profile-service
+          predicates:
+            - Path=/api/profile/**
+        - id: recipe-service
+          uri: lb://recipe-service
+          predicates:
+            - Path=/api/recipes/**
+        - id: menu-service
+          uri: lb://menu-service
+          predicates:
+            - Path=/api/menus/**
+        - id: shopping-service
+          uri: lb://shopping-service
+          predicates:
+            - Path=/api/shopping/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
