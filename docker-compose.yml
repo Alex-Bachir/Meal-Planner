@@ -1,5 +1,19 @@
 services:
 
+  config-server:
+    build:
+      context: ./config-server
+      dockerfile: Dockerfile
+    container_name: config-server
+    ports:
+      - "8888:8888"
+    # attends que consul démarre
+    depends_on:
+      - consul
+    networks:
+      - mealplanner-network
+    restart: unless-stopped
+
   mysql-auth:
     image: mysql:8.0
     container_name: mysql-auth
