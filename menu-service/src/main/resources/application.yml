@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: menu-service
+  config:
+    import: optional:configserver:http://config-server:8888
+  cloud:
+    consul:
+      host: consul
+      port: 8500
