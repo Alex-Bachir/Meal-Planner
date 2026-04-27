@@ -1,4 +1,4 @@
-package com.consfig_server.config_server;
+package com.mealplanner.config_server;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
