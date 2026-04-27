@@ -1,0 +1,98 @@
+services:
+
+  mysql-auth:
+    image: mysql:8.0
+    container_name: mysql-auth
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: ${MYSQL_AUTH_DB}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    networks:
+      - mealplanner-network
+
+  mysql-profile:
+      image: mysql:8.0
+      container_name: mysql-profile
+      ports:
+        - "3308:3306"
+      environment:
+        MYSQL_DATABASE: ${MYSQL_PROFILE_DB}
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      networks:
+        - mealplanner-network
+
+  mysql-recipe:
+      image: mysql:8.0
+      container_name: mysql-recipe
+      ports:
+        - "3309:3306"
+      environment:
+        MYSQL_DATABASE: ${MYSQL_RECIPE_DB}
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      networks:
+        - mealplanner-network
+
+  mysql-menu:
+      image: mysql:8.0
+      container_name: mysql-menu
+      ports:
+        - "3310:3306"
+      environment:
+        MYSQL_DATABASE: ${MYSQL_MENU_DB}
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      networks:
+        - mealplanner-network
+
+  mysql-shopping:
+      image: mysql:8.0
+      container_name: mysql-shopping
+      ports:
+        - "3311:3306"
+      environment:
+        MYSQL_DATABASE: ${MYSQL_SHOPPING_DB}
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      networks:
+        - mealplanner-network
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0.0
+    container_name: keycloak
+    # interface web Keycloak accessible http://localhost:8080
+    ports:
+      - "8080:8080"
+    environment:
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+    command: "start-dev"
+    networks:
+      - mealplanner-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      # port de communication en tre les microservices et RabbitMQ
+      - "5672:5672"
+      # interface web RabbitMQ zccecible http://localhost:15672
+      - "15672:15672"
+    environment:
+      # juste les identifiants par défaut pour accéder à l'interface
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    networks:
+      - mealplanner-network
+
+  consul:
+    image: hashicorp/consul:1.15
+    container_name: consul
+    ports:
+      - "8500:8500"
+    command: "agent -dev -client=0.0.0.0"
+    networks:
+      - mealplanner-network
+
+networks:
+  mealplanner-network:
+    driver: bridge
+
