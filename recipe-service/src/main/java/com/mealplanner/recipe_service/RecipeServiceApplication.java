@@ -1,9 +1,13 @@
-package com.recipe_service.recipe_service;
+package com.mealplanner.recipe_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
+@EnableDiscoveryClient
+@EnableFeignClients
 public class RecipeServiceApplication {
 
 	public static void main(String[] args) {
