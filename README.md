@@ -1,0 +1,1 @@
+MealPlanner Intelligent est une application web (et mobile à terme) conçue pour simplifier l’organisation des repas au quotidien. Elle permet aux utilisateurs d’enregistrer facilement leurs recettes (desserts, plats principaux, soupes, plats mijotés, etc.), puis de planifier leurs menus sur une semaine complète tout en générant automatiquement une liste de courses optimisée.
