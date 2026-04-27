@@ -1,5 +1,21 @@
 services:
 
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    ports:
+      - "8222:8222"
+
+    # attends consul & config-server pour démarrer
+    depends_on:
+      - consul
+      - config-server
+    networks:
+      - mealplanner-network
+    restart: unless-stopped
+
   config-server:
     build:
       context: ./config-server
