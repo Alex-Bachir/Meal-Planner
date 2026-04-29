@@ -20,16 +20,21 @@ public class Menu {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "user_id")
     private UUID userId;
 
+    @Column( name = "week_start_date")
     private LocalDate weekStartDate;
+    @Column(name = "week_end_date")
     private LocalDate weekEndDate;
+    @Column(name = "is_validated")
     private boolean isValidated;
 
     @CreationTimestamp
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 }

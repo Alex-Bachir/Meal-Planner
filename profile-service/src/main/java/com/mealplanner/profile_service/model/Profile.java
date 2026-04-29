@@ -23,6 +23,7 @@ public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    @Column(name = "user_id")
     private UUID userId;
     private String pseudo;
     private String avatar;
@@ -43,7 +44,9 @@ public class Profile {
     private List<String> allergies;
 
     @CreationTimestamp
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
     @UpdateTimestamp
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 }

@@ -1,7 +1,6 @@
-package com.mealplanner.menu_service.model;
+package com.mealplanner.shopping_service.model;
 
-import com.mealplanner.menu_service.enums.DayOfWeek;
-import com.mealplanner.menu_service.enums.MealType;
+import com.mealplanner.shopping_service.enums.ShoppingListStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -9,40 +8,32 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
 @Data
+@Entity
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "meal_slots")
-public class MealSlot {
+@AllArgsConstructor
+@Table(name = "shopping_lists")
+public class ShoppingList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(nullable = false, name = "user_id")
+    private UUID userId;
+
     @Column(nullable = false, name = "menu_id")
     private UUID menuId;
 
-    @Column(nullable = false, name = "recipe_id")
-    private UUID recipeId;
-
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private DayOfWeek day;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, name = "meal_type")
-    private MealType mealType;
-
-    @Column(nullable = false)
-    private int servings;
+    private ShoppingListStatus status;
 
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column( name = "updated_at")
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 }

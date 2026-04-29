@@ -21,7 +21,7 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "user_id")
     private UUID userId;
 
     @Column(nullable = false)
@@ -32,7 +32,9 @@ public class Recipe {
     @Column(columnDefinition = "TEXT")
     private String instructions;
 
+    @Column(name = "preparation_time")
     private int preparationTime;
+    @Column(name = "cooking_time")
     private int cookingTime;
     private int servings;
 
@@ -42,13 +44,18 @@ public class Recipe {
     @Enumerated(EnumType.STRING)
     private RecipeCategory category;
 
+    @Column(name = "image_url")
     private String imageUrl;
+    @Column(name = "is_vegetarian")
     private boolean isVegetarian;
+    @Column(name = "is_vegan")
     private boolean isVegan;
 
     @CreationTimestamp
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 }

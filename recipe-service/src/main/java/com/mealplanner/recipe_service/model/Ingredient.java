@@ -21,14 +21,18 @@ public class Ingredient {
     private UUID id;
     private String barcode;
     private String name;
+    @Column(name = "image_url")
     private String imageUrl;
     private String category;
+    @Column(name = "is_vegan")
     private boolean isVegan;
+    @Column(name = "is_vegetarian")
     private boolean isVegetarian;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> allergens;
 
+    @Column(name = "nutri_score")
     private String nutriScore;
     private double calories;
     private double proteins;
@@ -36,8 +40,10 @@ public class Ingredient {
     private double fat;
 
     @CreationTimestamp
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 }

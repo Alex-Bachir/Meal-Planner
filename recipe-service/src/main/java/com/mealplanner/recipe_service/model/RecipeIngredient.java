@@ -17,10 +17,10 @@ public class RecipeIngredient {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "recipe_id")
     private UUID recipeId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "ingredient_id")
     private UUID ingredientId;
 
     @Column(nullable = false)
