@@ -1,8 +1,10 @@
 package com.mealplanner.profile_service.service;
 
+import com.mealplanner.profile_service.client.AuthServiceClient;
 import com.mealplanner.profile_service.model.Profile;
 import com.mealplanner.profile_service.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,8 +15,14 @@ import java.util.UUID;
 public class ProfileService {
 
     private final ProfileRepository profileRepository;
+    private final AuthServiceClient authServiceClient;
 
     public Profile createProfile(Profile profile) {
+        // Vérifie que l'utilisateur existe dans auth-service
+        ResponseEntity<Object> user = authServiceClient.getUserById(profile.getUserId());
+        if (user.getStatusCode().is4xxClientError()) {
+            throw new RuntimeException("User not found in auth-service");
+        }
         return profileRepository.save(profile);
     }
 

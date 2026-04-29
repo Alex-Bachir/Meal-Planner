@@ -1,5 +1,6 @@
 package com.mealplanner.menu_service.service;
 
+import com.mealplanner.menu_service.config.MenuEventPublisher;
 import com.mealplanner.menu_service.model.Menu;
 import com.mealplanner.menu_service.repository.MenuRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.UUID;
 public class MenuService {
 
     private final MenuRepository menuRepository;
+    private final MenuEventPublisher menuEventPublisher;
 
     public Menu createMenu(Menu menu) {
         return menuRepository.save(menu);
@@ -30,12 +32,17 @@ public class MenuService {
     public Menu updateMenu(Menu menu) {
         return menuRepository.save(menu);
     }
-    // à ajouter plus tard RabbitMQ
+
     public Menu validateMenu(UUID id) {
         Menu menu = menuRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Menu not found"));
         menu.setValidated(true);
-        return menuRepository.save(menu);
+        Menu savedMenu = menuRepository.save(menu);
+
+        // Envoie le message RabbitMQ
+        menuEventPublisher.publishMenuValidated(savedMenu.getId());
+
+        return savedMenu;
     }
 
     public void deleteMenu(UUID id) {
